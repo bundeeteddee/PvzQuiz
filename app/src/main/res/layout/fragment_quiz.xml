@@ -1,0 +1,140 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- spacer -->
+    <View
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/quiz_toolbar_extra_view"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentTop="true"
+        />
+
+    <!-- Bottom Navigation / Countdown -->
+    <LinearLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <TextView
+            style="@style/Quiz.Navigation.Summary"
+            android:id="@+id/quiz_summary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            tools:text="Question 1/10"/>
+
+        <TextView
+            style="@style/Quiz.Navigation.Next"
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"/>
+
+    </LinearLayout>
+
+    <!-- Cancel/close -->
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ico_close"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/topPanel"
+        android:layout_alignTop="@+id/topPanel"
+        android:layout_alignBottom="@+id/topPanel"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:elevation="4dp"/>
+
+
+    <!-- Ensure question and answer is scrollable, for longer content-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@+id/bottom_navigation">
+
+        <!-- Single container for scrollview -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Question Container-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/question_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="55dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Category -->
+                    <TextView
+                        style="@style/Quiz.Question.Category"
+                        android:id="@+id/quiz_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="General Knowledge"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"/>
+
+                    <!-- Question -->
+                    <TextView
+                        style="@style/Quiz.Question.Content"
+                        android:id="@+id/question_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="Which country has the largest population in the world?"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Choices container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/question_cardview"
+                android:orientation="vertical">
+
+                <include layout="@layout/choice" android:id="@+id/choice1" />
+
+                <include layout="@layout/choice" android:id="@+id/choice2" />
+
+                <include layout="@layout/choice" android:id="@+id/choice3" />
+
+                <include layout="@layout/choice" android:id="@+id/choice4" />
+
+                <include layout="@layout/choice" android:id="@+id/choice5" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
