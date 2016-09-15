@@ -25,4 +25,5 @@
     <dimen name="quiz_content_general">55dp</dimen>
     <dimen name="quiz_category_margin_bottom">10dp</dimen>
     <dimen name="quiz_choices_container_padding_bottom">8dp</dimen>
+    <dimen name="quiz_result_icon_size">60dp</dimen>
 </resources>

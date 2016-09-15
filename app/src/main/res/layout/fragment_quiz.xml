@@ -136,8 +136,19 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                    <!-- Quiz Result -->
+                    <ImageView
+                        android:layout_width="@dimen/quiz_result_icon_size"
+                        android:layout_height="@dimen/quiz_result_icon_size"
+                        android:layout_alignBottom="@+id/question_cardview"
+                        android:layout_gravity="bottom|right"
+                        android:layout_margin="-10dp"
+                        android:visibility="@{quizViewModel.nextButtonVisibility}"
+                        app:resultIcon="@{quizViewModel.resultIcon}"
+                        tools:src="@drawable/ico_correct"/>
 
+                </android.support.v7.widget.CardView>
+                
                 <!-- Choices container -->
                 <LinearLayout
                     android:layout_width="match_parent"

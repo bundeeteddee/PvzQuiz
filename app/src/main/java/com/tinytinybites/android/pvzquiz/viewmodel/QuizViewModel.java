@@ -6,8 +6,10 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
 import android.os.CountDownTimer;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.tinytinybites.android.pvzquiz.R;
 import com.tinytinybites.android.pvzquiz.fragment.QuizFragment;
@@ -194,6 +196,19 @@ public class QuizViewModel extends BaseObservable implements ViewModel{
             }
         }
     }
+
+    public int getResultIcon(){
+        if(mQuiz.getChosen() != null && mQuiz.getChosen().getIsTheCorrectAnswer()){
+            return R.drawable.ico_correct;
+        }
+        return R.drawable.ico_wrong;
+    }
+
+    @BindingAdapter("resultIcon")
+    public static void setResultIcon(ImageView view, @DrawableRes int resId){
+        view.setImageResource(resId);
+    }
+
 
     @Override
     public void destroy() {
