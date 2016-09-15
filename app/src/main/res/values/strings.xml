@@ -18,4 +18,13 @@
     <string name="quiz_next" translatable="true">Next &gt;</string>
     <string name="quiz_see_results" translatable="true">See Results &gt;</string>
 
+    <!-- Quiz Results -->
+    <string name="quiz_results_play_again" translatable="true">Play Again?</string>
+    <string name="quiz_results_header_good_try" translatable="true">Good Try!</string>
+    <string name="quiz_results_header_good_job" translatable="true">Good Job!</string>
+    <string name="quiz_results_header_well_done" translatable="true">Well Done!</string>
+    <string name="quiz_results_header_excellent" translatable="true">Excellent!</string>
+    <string name="quiz_results_summary" translatable="true" formatted="false">You have completed the quiz in the \"%1$s\" category. Out of %2$d questions, you managed to get %3$d correct.</string>
+    <string name="quiz_results_summary_header" translatable="true" formatted="false"></string>
+
 </resources>

@@ -49,6 +49,14 @@
                 tools:text="Question 1/10"/>
 
             <TextView
+                style="@style/Quiz.Navigation.Summary"
+                android:id="@+id/countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{quizViewModel.countDownVisibility}"
+                android:text="@{quizViewModel.countDownTime}"/>
+
+            <TextView
                 style="@style/Quiz.Navigation.Next"
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
@@ -56,7 +64,8 @@
                 android:visibility="@{quizViewModel.nextButtonVisibility}"
                 android:onClick="@{quizViewModel.onNextSelected()}"
                 android:elevation="4dp"
-                android:text="@{sessionViewModel.nextButtonText}"/>
+                android:text="@{sessionViewModel.nextButtonText}"
+                app:fadeVisible="@{quizViewModel.nextButtonVisible}"/>
 
         </LinearLayout>
 

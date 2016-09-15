@@ -1,0 +1,119 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="quizResultsViewModel"
+            type="com.tinytinybites.android.pvzquiz.viewmodel.QuizResultsViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- spacer -->
+        <View
+            android:id="@+id/topPanel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/quiz_toolbar_extra_view"
+            android:background="?attr/colorPrimary"
+            android:layout_alignParentTop="true"
+            />
+
+        <!-- Bottom Navigation -->
+        <LinearLayout
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/quiz_bottom_navigation_padding"
+            android:gravity="center_vertical"
+            android:background="@android:color/white"
+            android:elevation="8dp">
+
+            <TextView
+                style="@style/Quiz.Navigation.DefaultButton"
+                android:id="@+id/done"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:onClick="@{quizResultsViewModel.onDoneSelected()}"
+                android:text="@string/done"/>
+
+            <TextView
+                style="@style/Quiz.Navigation.DefaultButton"
+                android:id="@+id/play_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{quizResultsViewModel.onPlayAgainSelected()}"
+                android:elevation="4dp"
+                android:text="@string/quiz_results_play_again"/>
+
+        </LinearLayout>
+
+
+        <!-- Ensure results are scrollable, for longer content-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_above="@+id/bottom_navigation">
+
+            <!-- Single container for scrollview -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Results Container-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/results_cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/quiz_question_card_margin_top"
+                    android:layout_marginBottom="@dimen/quiz_question_card_margin_bottom"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/quiz_content_general"
+                    android:layout_marginRight="@dimen/quiz_content_general"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:orientation="vertical">
+
+                        <!-- Header -->
+                        <TextView
+                            style="@style/QuizResults.Header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{quizResultsViewModel.resultHeader}"
+                            tools:text="Well Done!"/>
+                        <TextView
+                            style="@style/QuizResults.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{quizResultsViewModel.summary}"
+                            tools:text="@string/quiz_results_summary"/>
+                        <TextView
+                            style="@style/QuizResults.Highlight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{quizResultsViewModel.score}"
+                            tools:text="80%"/>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</layout>

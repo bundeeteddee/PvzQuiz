@@ -5,9 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.tinytinybites.android.pvzquiz.R;
 import com.tinytinybites.android.pvzquiz.fragment.QuizFragment;
+import com.tinytinybites.android.pvzquiz.fragment.QuizResultsFragment;
 import com.tinytinybites.android.pvzquiz.session.GameSession;
 
-public class QuizActivity extends AppCompatActivity implements QuizFragment.QuizNavigation{
+public class QuizActivity extends AppCompatActivity implements QuizFragment.QuizNavigation, QuizResultsFragment.QuizResultsNavigation{
     //Tag
     private static final String TAG = QuizActivity.class.getName();
 
@@ -18,8 +19,9 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        //TODO:
+        //Initial insert
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                 .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()))
                 .commit();
     }
@@ -33,18 +35,35 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
     public void OnNextQuiz() {
         if(GameSession.getInstance().nextQuiz()){
             getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                     .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()))
                     .commit();
         }else{
-            //TODO: We are done show result
-
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                    .replace(R.id.fragment_container, QuizResultsFragment.newInstance())
+                    .commit();
         }
-
-
     }
 
     @Override
     public void OnCloseQuiz() {
         finish();
+    }
+
+    @Override
+    public void OnDoneQuiz() {
+        finish();
+    }
+
+    @Override
+    public void OnPlayNewQuiz() {
+        //Reset game session
+        GameSession.getInstance().resetSession();
+
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()))
+                .commit();
     }
 }

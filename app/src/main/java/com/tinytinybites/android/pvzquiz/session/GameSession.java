@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import com.tinytinybites.android.pvzquiz.model.Quiz;
-import com.tinytinybites.android.pvzquiz.model.QuizResult;
 import com.tinytinybites.android.pvzquiz.util.ResourceUtil;
 
 /**
@@ -19,8 +18,7 @@ public class GameSession {
     //Variables
     private static GameSession _instance;
     private List<Quiz> mQuizes;
-    private QuizResult mResult;
-    private int mTotalCorrect;
+    private String mCategory;
     private int mCurrentQuizIndex;
     private Object mMutex = new Object();
 
@@ -52,11 +50,7 @@ public class GameSession {
             } else {
                 mQuizes = new ArrayList<>();
             }
-
-            mTotalCorrect = 0;
             mCurrentQuizIndex = 0;
-
-            mResult = null;
         }
 
         generateQuizes();
@@ -73,10 +67,10 @@ public class GameSession {
                 JSONObject quizObject = new JSONObject(quizJson);
 
                 //Quizes
-                String category = quizObject.getString("category");
+                mCategory = quizObject.getString("category");
                 JSONArray quizesJsonArray = quizObject.getJSONArray("quizes");
                 for (int i = 0; i < quizesJsonArray.length(); i++) {
-                    mQuizes.add(new Quiz(quizesJsonArray.getJSONObject(i), category));
+                    mQuizes.add(new Quiz(quizesJsonArray.getJSONObject(i), mCategory));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -101,6 +95,20 @@ public class GameSession {
     public int getTotalQuizQuestions(){
         return mQuizes.size();
     }
+
+    public int getTotalCorrect(){
+        int acc = 0;
+        synchronized (mMutex) {
+            for (Quiz q : mQuizes) {
+                if(q.getChosen().getIsTheCorrectAnswer()){
+                    acc++;
+                }
+            }
+        }
+        return acc;
+    }
+
+    public String getCategory(){    return mCategory;}
 
     public boolean nextQuiz(){
         synchronized (mMutex) {

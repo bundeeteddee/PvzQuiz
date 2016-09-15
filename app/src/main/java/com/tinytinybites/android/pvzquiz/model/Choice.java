@@ -22,6 +22,16 @@ public class Choice implements Parcelable{
     private boolean mIsTheAnswer;
 
     /**
+     * Empty constructor to indicate timeout and no choices selected
+     */
+    public Choice(){
+        mIsTheAnswer = false;
+        mContent = null;
+        mCreatedDate = new Date();
+        mId = -1;
+    }
+
+    /**
      * Constructor
      * @param mContent
      * @param mCreatedDate
@@ -77,6 +87,10 @@ public class Choice implements Parcelable{
 
     public boolean getIsTheCorrectAnswer(){
         return mIsTheAnswer;
+    }
+
+    public boolean isABlankChoice(){
+        return mContent == null;
     }
 
     @Override
