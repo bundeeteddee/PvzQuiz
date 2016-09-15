@@ -3,6 +3,10 @@ package com.tinytinybites.android.pvzquiz.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,6 +16,10 @@ import java.util.List;
 public class Quiz implements Parcelable{
     //Tag
     private static final String TAG = Quiz.class.getName();
+
+    //JSON keys
+    private static final String JSON_KEY_QUESTION = "question";
+    private static final String JSON_KEY_CHOICES = "choices";
 
     //Variables
     private Question mQuestion;
@@ -34,6 +42,20 @@ public class Quiz implements Parcelable{
         mQuestion = in.readParcelable(Question.class.getClassLoader());
         mChoices = in.createTypedArrayList(Choice.CREATOR);
         mChosen = in.readParcelable(Choice.class.getClassLoader());
+    }
+
+    /**
+     * Construct Quiz object from json object
+     * @param jsonObj
+     */
+    public Quiz(JSONObject jsonObj, String category){
+        this.mQuestion = new Question(category, jsonObj.optString(JSON_KEY_QUESTION), new Date(), -1);
+        this.mChoices = new ArrayList<>();
+        JSONArray choicesJsonArray = jsonObj.optJSONArray(JSON_KEY_CHOICES);
+        for (int i = 0; i < choicesJsonArray.length(); i++) {
+            JSONObject object = choicesJsonArray.optJSONObject(i);
+            mChoices.add(new Choice(object));
+        }
     }
 
     public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
@@ -59,6 +81,8 @@ public class Quiz implements Parcelable{
     public Question getQuestion() {
         return mQuestion;
     }
+
+    public void setChosen(Choice chosen){   this.mChosen = chosen;}
 
     @Override
     public int describeContents() {

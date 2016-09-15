@@ -1,56 +1,139 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context=".fragment.DashboardFragment">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/startButton"
+    <data>
+        <variable
+            name="dashboardViewModel"
+            type="com.tinytinybites.android.pvzquiz.viewmodel.DashboardViewModel"/>
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:layout_marginRight="42dp"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="3dp"
-        app:cardUseCompatPadding="true"
-        app:cardPreventCornerOverlap="false"
-        >
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <!-- spacer -->
+        <View
+            android:id="@+id/topPanel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/quiz_toolbar_extra_view"
+            android:background="?attr/colorPrimary"
+            android:layout_alignParentTop="true"
+            />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/startButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="15dp"
-            android:background="@color/accent">
+            android:layout_marginLeft="@dimen/dashboard_start_button_margin_side"
+            android:layout_marginRight="@dimen/dashboard_start_button_margin_side"
+            android:layout_marginTop="@dimen/dashboard_start_button_margin_top"
+            android:onClick="@{dashboardViewModel.onStartNewGameClicked()}"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="3dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="false"
+            >
 
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ico_arrow_right"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentRight="true"/>
-
-            <TextView
-                style="@style/Dashboard.Button.Text"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/arrow"
-                android:inputType="textCapCharacters"
-                android:text="Start New Game"/>
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/dashboard_start_button_padding"
+                android:background="@color/accent">
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/arrow"
+                    android:layout_width="@dimen/dashboard_start_button_arrow_size"
+                    android:layout_height="@dimen/dashboard_start_button_arrow_size"
+                    android:src="@drawable/ico_arrow_right"
+                    android:layout_marginLeft="@dimen/dashboard_start_button_arrow_margin_left"
+                    android:layout_alignParentRight="true"/>
 
-    </android.support.v7.widget.CardView>
+                <TextView
+                    style="@style/Dashboard.Button.Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/arrow"
+                    android:inputType="textCapCharacters"
+                    android:text="@string/dashboard_start_new_game"/>
 
-    <!-- Container for last results -->
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!-- Instructions Container -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/instructions_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dashboard_instructions_margin_side"
+            android:layout_marginRight="@dimen/dashboard_instructions_margin_side"
+            android:layout_marginTop="@dimen/dashboard_instructions_margin_top"
+            android:layout_below="@+id/startButton"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="3dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="false"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/dashboard_instructions_padding"
+                android:orientation="vertical"
+                android:background="@android:color/white">
+
+                <!-- Header -->
+                <TextView
+                    style="@style/Dashboard.Instructions.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_instructions_what"/>
+                <TextView
+                    style="@style/Dashboard.Instructions.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_instructions_what_content"/>
+
+                <!-- Header -->
+                <TextView
+                    style="@style/Dashboard.Instructions.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_instructions_how"/>
+                <TextView
+                    style="@style/Dashboard.Instructions.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_instructions_how_content"/>
+
+                <!-- Header -->
+                <TextView
+                    style="@style/Dashboard.Instructions.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_instructions_so_then"/>
+                <TextView
+                    style="@style/Dashboard.Instructions.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_instructions_so_then_content"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
 
 
-</RelativeLayout>
+        <!-- Container for last results -->
+
+
+
+    </RelativeLayout>
+
+
+</layout>

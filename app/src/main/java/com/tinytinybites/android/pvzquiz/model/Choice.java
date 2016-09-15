@@ -3,7 +3,9 @@ package com.tinytinybites.android.pvzquiz.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONObject;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by bundee on 9/13/16.
@@ -39,6 +41,16 @@ public class Choice implements Parcelable{
         mIsTheAnswer = in.readByte() != 0;
     }
 
+    public Choice(JSONObject jsonObj){
+        Iterator<String> iterator = jsonObj.keys();
+        if(iterator.hasNext()) {
+            mContent = iterator.next();
+            mIsTheAnswer = jsonObj.optBoolean(mContent);
+            mCreatedDate = new Date();
+            mId = -1;
+        }
+    }
+
     public static final Creator<Choice> CREATOR = new Creator<Choice>() {
         @Override
         public Choice createFromParcel(Parcel in) {
@@ -63,7 +75,7 @@ public class Choice implements Parcelable{
         return mId;
     }
 
-    public boolean isTheCorrectAnswer(){
+    public boolean getIsTheCorrectAnswer(){
         return mIsTheAnswer;
     }
 

@@ -11,8 +11,8 @@
 
     <!-- Button -->
     <color name="button_main_text">#FFFFFF</color>
-    <color name="button_quiz_choice_correct">#4b7b2c</color>
-    <color name="button_quiz_choice_wrong">#df5454</color>
-
+    <color name="button_quiz_choice_correct">#8eb476</color>
+    <color name="button_quiz_choice_wrong">#e27f7f</color>
+    <color name="button_quiz_choice_default">#FFFFFF</color>
 
 </resources>

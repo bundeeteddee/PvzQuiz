@@ -1,5 +1,21 @@
 <resources>
     <string name="app_name">PvZQuiz</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_quiz">QuizActivity</string>
+
+    <!-- Common -->
+    <string name="done" translatable="true">Done</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_start_new_game" translatable="true">Start New Game</string>
+    <string name="dashboard_instructions_what" translatable="true">What is this?</string>
+    <string name="dashboard_instructions_what_content" translatable="true">This is a very simple trivia game. :) </string>
+    <string name="dashboard_instructions_how" translatable="true">How does it work?</string>
+    <string name="dashboard_instructions_how_content" translatable="true">The trivia questions are loaded from the .apk itself. Each game consists of 10 unique questions and each question has 5 possible answers. You have exactly 10 seconds to answer each question</string>
+    <string name="dashboard_instructions_so_then" translatable="true">How good am i in this?</string>
+    <string name="dashboard_instructions_so_then_content" translatable="true">After every game you will see your results. Good luck!</string>
+
+    <!-- Quiz -->
+    <string name="quiz_next" translatable="true">Next &gt;</string>
+    <string name="quiz_see_results" translatable="true">See Results &gt;</string>
+
 </resources>

@@ -1,0 +1,44 @@
+{
+  "category" : "General Knowledge",
+  "quizes" : [{
+    "question" : "The moon is a",
+    "choices" : [{"Comet" : false}, {"Galaxy": false}, {"Satellite": true}, {"Star": false}, {"Planet": false}]
+  },
+  {
+    "question" : "Who receives Dronacharya Award?",
+    "choices" : [{"Teachers": false}, {"Scientists" : false}, {"Movie Actors": false}, {"Sport Coaches": true}, {"Sportmen": false}]
+  },
+  {
+    "question" : "In which year India Joined the United Nations?",
+    "choices" : [{"1954" : false}, {"1955": true}, {"1956": false}, {"1957": false}, {"1958": false}]
+  },
+  {
+    "question" : "Who discovered magnetic field of electric current?",
+    "choices" : [{"Ampere" : false}, {"Faraday": true}, {"Fleming": false}, {"Edison": false}, {"Galileo": false}]
+  },
+  {
+    "question" : "The Yellow Stone National Park is in",
+    "choices" : [{"U. S. A." : true}, {"Alaska": false}, {"France": false}, {"China": false}, {"Maldives": false}]
+  },
+  {
+    "question" : "The equator passes through which of the following continents?",
+    "choices" : [{"Africa" : true}, {"Australia": false}, {"Europe": false}, {"North America": false}, {"South America": false}]
+  },
+  {
+    "question" : "How many goals were scored in the 2010 FIFA World Cup?",
+    "choices" : [{"75" : false}, {"130": false}, {"145": true}, {"185": false}, {"212": false}]
+  },
+  {
+    "question" : "How many presidents of France had there been as at 2010?",
+    "choices" : [{"7" : false}, {"12": false}, {"21": false}, {"23": true}, {"35": false}]
+  },
+  {
+    "question" : "Which one of the following is a fast growing tree?",
+    "choices" : [{"Teak" : false}, {"Eucalyptus": true}, {"Banyan": false}, {"Coconut": false}, {"White Cedars": false}]
+  },
+  {
+    "question" : "In which year were Concorde planes retired from service?",
+    "choices" : [{"1998" : false}, {"2000": false}, {"2002": false}, {"2003": true}, {"2006": false}]
+  }]
+
+}
