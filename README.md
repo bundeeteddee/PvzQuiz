@@ -3,6 +3,7 @@ A simple quiz game built with some specific requirements. Why is it called PvZQu
 * A single player quiz game
 * A start screen that a user can start a new game
 * 10 unique questions, each quiz question has 5 choices
+* You have 10 seconds to answer each question
 * Once quiz is completed, show a result page. Allow user to start a new game
 
 # What is it made of?
