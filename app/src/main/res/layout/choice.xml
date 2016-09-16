@@ -31,7 +31,6 @@
             android:tag="@{choice}"
             android:text="@{choice.content}"
             android:enabled="@{quizViewModel.choicesDisabled ? false : true}"
-            android:onClick="@{quizViewModel.onChoiceSelected()}"
             tools:text="China"/>
 
     </android.support.v7.widget.CardView>

@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:onClick="@{quizResultsViewModel.onDoneSelected()}"
                 android:text="@string/done"/>
 
             <TextView
@@ -49,7 +48,6 @@
                 android:id="@+id/play_again"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{quizResultsViewModel.onPlayAgainSelected()}"
                 android:elevation="4dp"
                 android:text="@string/quiz_results_play_again"/>
 

@@ -62,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{quizViewModel.nextButtonVisibility}"
-                android:onClick="@{quizViewModel.onNextSelected()}"
                 android:elevation="4dp"
                 android:text="@{sessionViewModel.nextButtonText}"
                 app:fadeVisible="@{quizViewModel.nextButtonVisible}"/>
@@ -79,7 +78,6 @@
             android:layout_alignLeft="@+id/topPanel"
             android:layout_alignTop="@+id/topPanel"
             android:layout_alignBottom="@+id/topPanel"
-            android:onClick="@{quizViewModel.onCloseSelected()}"
             android:padding="@dimen/quiz_close_button_padding"
             android:elevation="4dp"/>
 
@@ -148,7 +146,7 @@
                         tools:src="@drawable/ico_correct"/>
 
                 </android.support.v7.widget.CardView>
-                
+
                 <!-- Choices container -->
                 <LinearLayout
                     android:layout_width="match_parent"

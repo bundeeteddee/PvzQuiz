@@ -2,24 +2,25 @@ package com.tinytinybites.android.pvzquiz.viewmodel;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
 import android.os.CountDownTimer;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.tinytinybites.android.pvzquiz.R;
-import com.tinytinybites.android.pvzquiz.fragment.QuizFragment;
 import com.tinytinybites.android.pvzquiz.model.Choice;
 import com.tinytinybites.android.pvzquiz.model.Quiz;
+import com.tinytinybites.android.pvzquiz.util.ResourceUtil;
 
 /**
  * Created by bundee on 9/14/16.
  */
-public class QuizViewModel extends BaseObservable implements ViewModel{
+public class QuizViewModel extends BaseObservable implements ViewModel, Parcelable{
     //Tag
     private static final String TAG = QuizViewModel.class.getName();
 
@@ -28,18 +29,16 @@ public class QuizViewModel extends BaseObservable implements ViewModel{
 
     //Variables
     private Quiz mQuiz;
-    private Context mContext;
     private boolean mChoicesDisabled;
-    private QuizFragment.QuizNavigation mListener;
     private CountDownTimer mTimer;
     private int mCountDownTime;
 
-    public QuizViewModel(Context context,
-                         Quiz quiz,
-                         QuizFragment.QuizNavigation listener){
-        this.mContext = context;
+    /**
+     * Default constructor
+     * @param quiz
+     */
+    public QuizViewModel(Quiz quiz){
         this.mQuiz = quiz;
-        this.mListener = listener;
         this.mChoicesDisabled = false;
 
         if(mQuiz.getChosen() == null) {
@@ -63,6 +62,37 @@ public class QuizViewModel extends BaseObservable implements ViewModel{
             this.mCountDownTime = 0;
         }
     }
+
+    protected QuizViewModel(Parcel in) {
+        Log.e(TAG, "QuizViewModel >>> Parcel", null);
+        mQuiz = in.readParcelable(Quiz.class.getClassLoader());
+        mChoicesDisabled = in.readByte() != 0;
+        mCountDownTime = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(mQuiz, flags);
+        dest.writeByte((byte) (mChoicesDisabled ? 1 : 0));
+        dest.writeInt(mCountDownTime);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<QuizViewModel> CREATOR = new Creator<QuizViewModel>() {
+        @Override
+        public QuizViewModel createFromParcel(Parcel in) {
+            return new QuizViewModel(in);
+        }
+
+        @Override
+        public QuizViewModel[] newArray(int size) {
+            return new QuizViewModel[size];
+        }
+    };
 
     public Quiz getQuiz(){
         return mQuiz;
@@ -94,59 +124,32 @@ public class QuizViewModel extends BaseObservable implements ViewModel{
         return mCountDownTime + "s";
     }
 
-    public View.OnClickListener onChoiceSelected() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mChoicesDisabled = true;
-                mTimer.cancel();
-                mCountDownTime = 0;
+    public void onChoiceSelected(View v){
+        mChoicesDisabled = true;
+        mTimer.cancel();
+        mCountDownTime = 0;
 
-                if(v.getTag() != null){
-                    mQuiz.setChosen((Choice) v.getTag());
-                    notifyChange();
-                }
-            }
-        };
-    }
-
-    public View.OnClickListener onNextSelected() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null){
-                    mListener.OnNextQuiz();
-                }
-            }
-        };
-    }
-
-    public View.OnClickListener onCloseSelected() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null){
-                    mListener.OnCloseQuiz();
-                }
-            }
-        };
+        if(v.getTag() != null){
+            mQuiz.setChosen((Choice) v.getTag());
+            notifyChange();
+        }
     }
 
     public int getBackgroundColor(Choice currentChoice){
         if(mQuiz.getChosen() != null){
             if(mQuiz.getChosen().equals(currentChoice)){
                 if(currentChoice.getIsTheCorrectAnswer()) {
-                    return ContextCompat.getColor(mContext, R.color.button_quiz_choice_correct);
+                    return ResourceUtil.GetColor(R.color.button_quiz_choice_correct);
                 }else{
-                    return  ContextCompat.getColor(mContext, R.color.button_quiz_choice_wrong);
+                    return ResourceUtil.GetColor(R.color.button_quiz_choice_wrong);
                 }
             }
 
             if(currentChoice.getIsTheCorrectAnswer()) {
-                return ContextCompat.getColor(mContext, R.color.button_quiz_choice_correct);
+                return ResourceUtil.GetColor(R.color.button_quiz_choice_correct);
             }
         }
-        return ContextCompat.getColor(mContext, R.color.button_quiz_choice_default);
+        return ResourceUtil.GetColor(R.color.button_quiz_choice_default);
     }
 
     public int getNextButtonVisibility(){
@@ -209,12 +212,13 @@ public class QuizViewModel extends BaseObservable implements ViewModel{
         view.setImageResource(resId);
     }
 
-
     @Override
     public void destroy() {
-        //TODO: clean up any subscribers
+        //TODO: clean up any other subscribers
 
-        mListener = null;
-        mContext = null;
+        if(mTimer != null){
+            mTimer.cancel();
+            mTimer = null;
+        }
     }
 }

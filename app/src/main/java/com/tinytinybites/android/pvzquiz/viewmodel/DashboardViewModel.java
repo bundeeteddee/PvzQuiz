@@ -1,50 +1,52 @@
 package com.tinytinybites.android.pvzquiz.viewmodel;
 
-import android.content.Context;
 import android.databinding.BaseObservable;
-import android.view.View;
-
-import com.tinytinybites.android.pvzquiz.fragment.DashboardFragment;
-import com.tinytinybites.android.pvzquiz.session.GameSession;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by bundee on 9/14/16.
  */
-public class DashboardViewModel extends BaseObservable implements ViewModel{
+public class DashboardViewModel extends BaseObservable implements ViewModel, Parcelable{
     //Tag
     private static final String TAG = DashboardViewModel.class.getName();
 
     //Variables
-    private Context mContext;
-    private GameSession mGameSession;
-    private DashboardFragment.DashboardNavigation mListener;
 
     /**
      * Constructor
-     * @param context
-     * @param listener
      */
-    public DashboardViewModel(Context context, DashboardFragment.DashboardNavigation listener){
-        this.mContext = context;
-        this.mGameSession = GameSession.getInstance();
-        this.mListener = listener;
+    public DashboardViewModel(){
+
     }
 
-    public View.OnClickListener onStartNewGameClicked() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null){
-                    mListener.OnStartNewGameClicked();
-                }
-            }
-        };
+    protected DashboardViewModel(Parcel in) {
     }
 
     @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DashboardViewModel> CREATOR = new Creator<DashboardViewModel>() {
+        @Override
+        public DashboardViewModel createFromParcel(Parcel in) {
+            return new DashboardViewModel(in);
+        }
+
+        @Override
+        public DashboardViewModel[] newArray(int size) {
+            return new DashboardViewModel[size];
+        }
+    };
+
+    @Override
     public void destroy() {
-        mContext = null;
-        mListener = null;
+
     }
 
 }

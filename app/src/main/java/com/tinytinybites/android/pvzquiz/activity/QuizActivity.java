@@ -19,11 +19,13 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        //Initial insert
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()))
-                .commit();
+        if (savedInstanceState == null) {
+            //Initial insert
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                    .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()), QuizFragment.class.getName())
+                    .commit();
+        }
     }
 
     @Override
@@ -36,12 +38,12 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
         if(GameSession.getInstance().nextQuiz()){
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                    .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()))
+                    .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()), QuizFragment.class.getName())
                     .commit();
         }else{
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                    .replace(R.id.fragment_container, QuizResultsFragment.newInstance())
+                    .replace(R.id.fragment_container, QuizResultsFragment.newInstance(), QuizResultsFragment.class.getName())
                     .commit();
         }
     }
@@ -63,7 +65,7 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
 
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()))
+                .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()), QuizFragment.class.getName())
                 .commit();
     }
 }

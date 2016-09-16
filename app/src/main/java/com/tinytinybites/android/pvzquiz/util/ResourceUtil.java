@@ -1,6 +1,8 @@
 package com.tinytinybites.android.pvzquiz.util;
 
+import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
+import android.support.v4.content.ContextCompat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,6 +59,15 @@ public class ResourceUtil {
      */
     public static final int GetDp(@DimenRes int dimenResId){
         return (int) (EApplication.getInstance().getResources().getDimension(dimenResId) / EApplication.getInstance().getResources().getDisplayMetrics().density);
+    }
+
+    /**
+     * Get the color given color res id
+     * @param colorResId
+     * @return
+     */
+    public static final int GetColor(@ColorRes int colorResId){
+        return ContextCompat.getColor(EApplication.getInstance(), colorResId);
     }
 
 }
