@@ -30,3 +30,7 @@ A simple quiz game built with some specific requirements. Why is it called PvZQu
 `./adb -d install /path/to/PvZQuiz/app/build/outputs/apk/app-debug.apk`
 
 Done
+
+# Screenshots
+|[![Intro](screenshot_intro.png)](https://bundeeteddee.github.io/PvzQuiz/)|[![Quiz](screenshot_quiz.png)](https://bundeeteddee.github.io/PvzQuiz/)|[![Correct Answer](screenshot_correct_choice.png)](https://bundeeteddee.github.io/PvzQuiz/)|[![Incorrect Answer](screenshot_incorrect_choice.png)](https://bundeeteddee.github.io/PvzQuiz/)|[![Results](screenshot_result.png)](https://bundeeteddee.github.io/PvzQuiz/)|
+|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
