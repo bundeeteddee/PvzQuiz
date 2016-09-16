@@ -2,6 +2,10 @@
     <string name="app_name">PvZQuiz</string>
     <string name="action_settings">Settings</string>
 
+    <!-- UI elements -->
+    <string name="transition_close_button" translatable="false">transition_close_button</string>
+    <string name="transition_top_panel" translatable="false">transition_top_panel</string>
+
     <!-- Common -->
     <string name="done" translatable="true">Done</string>
 

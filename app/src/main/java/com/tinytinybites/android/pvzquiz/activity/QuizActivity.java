@@ -1,7 +1,13 @@
 package com.tinytinybites.android.pvzquiz.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.view.View;
 
 import com.tinytinybites.android.pvzquiz.R;
 import com.tinytinybites.android.pvzquiz.fragment.QuizFragment;
@@ -21,10 +27,7 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
 
         if (savedInstanceState == null) {
             //Initial insert
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                    .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()), QuizFragment.class.getName())
-                    .commit();
+            showCurrentQuizFragment(null, null);
         }
     }
 
@@ -34,12 +37,9 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
     }
 
     @Override
-    public void OnNextQuiz() {
+    public void OnNextQuiz(View closeView, View topPanelView) {
         if(GameSession.getInstance().nextQuiz()){
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                    .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()), QuizFragment.class.getName())
-                    .commit();
+            showCurrentQuizFragment(closeView, topPanelView);
         }else{
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -63,9 +63,43 @@ public class QuizActivity extends AppCompatActivity implements QuizFragment.Quiz
         //Reset game session
         GameSession.getInstance().resetSession();
 
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                .replace(R.id.fragment_container, QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz()), QuizFragment.class.getName())
-                .commit();
+        showCurrentQuizFragment(null, null);
+    }
+
+    /**
+     * Convenince function to show a new quiz fragment
+     * @param closeView
+     * @param topPanelView
+     */
+    private void showCurrentQuizFragment(View closeView, View topPanelView){
+        //Quiz fragment instance
+        QuizFragment fragment = QuizFragment.newInstance(GameSession.getInstance().getCurrentQuiz());
+
+        //Basic fragment transaction with animation
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+
+        //If supported, apply shared element (close btuton, top panel)
+        //Also, add some transition for all other elements in the fragment (the new fragment)
+        //Only for lollipop
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //Inflate transitions to apply
+            Transition noTransform = TransitionInflater.from(this).inflateTransition(android.R.transition.no_transition);
+            Transition slideRightTransform = TransitionInflater.from(this).inflateTransition(android.R.transition.slide_right);
+
+            //Setup enter transition on fragment
+            fragment.setSharedElementEnterTransition(noTransform); //Transition for shared elements
+            fragment.setEnterTransition(slideRightTransform); //Transition for fragment entering
+
+            //Get close image and top panel view
+            if(closeView != null && topPanelView != null) {
+                ViewCompat.setTransitionName(closeView, getString(R.string.transition_close_button));
+                ft.addSharedElement(closeView, getString(R.string.transition_close_button));
+                ft.addSharedElement(topPanelView, getString(R.string.transition_top_panel));
+            }
+        }
+
+        ft.replace(R.id.fragment_container, fragment, QuizFragment.class.getName());
+        ft.commit();
     }
 }

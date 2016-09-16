@@ -142,7 +142,8 @@ public class QuizFragment extends Fragment {
         public void onClick(View v) {
             if(getActivity() != null &&
                     getActivity() instanceof QuizNavigation){
-                ((QuizNavigation)getActivity()).OnNextQuiz();
+                //Find shared element, the close button
+                ((QuizNavigation)getActivity()).OnNextQuiz(mBinding.close, mBinding.topPanel);
             }
         }
     };
@@ -161,7 +162,7 @@ public class QuizFragment extends Fragment {
     };
 
     public interface QuizNavigation{
-        void OnNextQuiz();
+        void OnNextQuiz(View view1, View view2);
         void OnCloseQuiz();
     }
 }

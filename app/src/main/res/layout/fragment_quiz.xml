@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/quiz_toolbar_extra_view"
             android:background="?attr/colorPrimary"
+            android:transitionName="@string/transition_top_panel"
             android:layout_alignParentTop="true"
             />
 
@@ -79,6 +80,7 @@
             android:layout_alignTop="@+id/topPanel"
             android:layout_alignBottom="@+id/topPanel"
             android:padding="@dimen/quiz_close_button_padding"
+            android:transitionName="@string/transition_close_button"
             android:elevation="4dp"/>
 
 
