@@ -9,6 +9,7 @@ A simple quiz game built with some specific requirements. Why is it called PvZQu
 * [Android Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html) Binding of xml elements
 * [MVVM Framework](https://en.wikipedia.org/wiki/Model–view–viewmodel) A framework that i'm using for the first time actually, which works quite well with data binding library.
 * The usual material support library from Google
+* The actual quiz questions are included in the project in the form a `.json` file under `/res/raw/quiz.json`
 
 # How to run on your Android phone?
 1. First, Clone this repo
