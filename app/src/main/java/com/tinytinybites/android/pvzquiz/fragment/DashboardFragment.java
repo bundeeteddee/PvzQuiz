@@ -12,6 +12,7 @@ import com.tinytinybites.android.pvzquiz.R;
 import com.tinytinybites.android.pvzquiz.databinding.FragmentDashboardBinding;
 import com.tinytinybites.android.pvzquiz.intent.IntentUtil;
 import com.tinytinybites.android.pvzquiz.viewmodel.DashboardViewModel;
+import com.tinytinybites.android.pvzquiz.viewmodel.SessionViewModel;
 
 
 public class DashboardFragment extends Fragment {
@@ -21,6 +22,7 @@ public class DashboardFragment extends Fragment {
     //Variables
     private FragmentDashboardBinding mBinding;
     private DashboardViewModel mDashboardViewModel; //Not really needed now as there are no real state info needed
+    private SessionViewModel mSessionViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,9 +48,9 @@ public class DashboardFragment extends Fragment {
         //Data binding
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
         mDashboardViewModel = new DashboardViewModel();
+        mSessionViewModel = new SessionViewModel();
         mBinding.setDashboardViewModel(mDashboardViewModel);
-
-        bindClickListeners();
+        mBinding.setSessionViewModel(mSessionViewModel);
 
         return mBinding.getRoot();
     }
@@ -57,42 +59,7 @@ public class DashboardFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        unbindClickListeners();
-
         mBinding.unbind();
-    }
-
-    /**
-     * Bind needed click listeners
-     */
-    private void bindClickListeners(){
-        //start button
-        mBinding.startButton.setOnClickListener(startGameClickListener);
-    }
-
-    /**
-     * Unbind click listeners
-     */
-    private void unbindClickListeners() {
-        //Choices
-        mBinding.startButton.setOnClickListener(null);
-    }
-
-    /**
-     * Click listener for start button
-     */
-    private View.OnClickListener startGameClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            if(getActivity() != null &&
-                    (getActivity()) instanceof DashboardNavigation){
-                ((DashboardNavigation)getActivity()).OnStartNewGameClicked();
-            }
-        }
-    };
-
-    public interface DashboardNavigation{
-        void OnStartNewGameClicked();
     }
 
 }

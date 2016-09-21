@@ -3,9 +3,13 @@ package com.tinytinybites.android.pvzquiz.viewmodel;
 import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
 import com.tinytinybites.android.pvzquiz.R;
 import com.tinytinybites.android.pvzquiz.application.EApplication;
+import com.tinytinybites.android.pvzquiz.event.DoneQuizesEvent;
+import com.tinytinybites.android.pvzquiz.event.PlayQuizAgainEvent;
 import com.tinytinybites.android.pvzquiz.session.GameSession;
 
 /**
@@ -89,6 +93,20 @@ public class QuizResultsViewModel extends BaseObservable implements ViewModel, P
     }
 
     public String getScore(){
-        return (((float)mTotalCorrect/mTotalQuiz) * 100) + "%";
+        return String.format("%.0f", ((float)mTotalCorrect/mTotalQuiz) * 100) + "%";
+    }
+
+    /**
+     * Click listener for done button
+     */
+    public void onDoneClicked(View v){
+        EventBus.getDefault().post(new DoneQuizesEvent());
+    }
+
+    /**
+     * Click listener for play again button
+     */
+    public void onPlayAgainClicked(View v){
+        EventBus.getDefault().post(new PlayQuizAgainEvent());
     }
 }

@@ -3,17 +3,49 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="sessionViewModel"
+            type="com.tinytinybites.android.pvzquiz.viewmodel.SessionViewModel"/>
+    </data>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context="com.tinytinybites.android.pvzquiz.activity.QuizActivity">
+        android:fitsSystemWindows="true">
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:ignore="MergeRootFrame" />
+            tools:ignore="MergeRootFrame" >
+
+            <LinearLayout
+                android:id="@+id/progress_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{sessionViewModel.progressContainerVisibility}"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/Quiz.Question.LoadingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quiz_loading"
+                    tools:text="@string/quiz_loading"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:id="@+id/loading"
+                    android:layout_width="@dimen/dashboard_start_button_progress_size"
+                    android:layout_height="@dimen/dashboard_start_button_progress_size"
+                    android:layout_gravity="center"
+                    />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

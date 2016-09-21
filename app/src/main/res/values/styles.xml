@@ -46,6 +46,12 @@
     <!-- Quiz Styles -->
     <style name="Quiz"/>
     <style name="Quiz.Question"/>
+    <style name="Quiz.Question.LoadingText">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
     <style name="Quiz.Question.Category">
         <item name="android:textColor">@color/button_main_text</item>
         <item name="android:textSize">14sp</item>

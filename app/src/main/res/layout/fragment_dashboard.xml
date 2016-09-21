@@ -1,12 +1,14 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="dashboardViewModel"
             type="com.tinytinybites.android.pvzquiz.viewmodel.DashboardViewModel"/>
+        <variable
+            name="sessionViewModel"
+            type="com.tinytinybites.android.pvzquiz.viewmodel.SessionViewModel"/>
     </data>
 
     <RelativeLayout
@@ -41,6 +43,7 @@
                     android:layout_marginLeft="@dimen/dashboard_start_button_margin_side"
                     android:layout_marginRight="@dimen/dashboard_start_button_margin_side"
                     android:layout_marginTop="@dimen/dashboard_start_button_margin_top"
+                    android:onClick="@{dashboardViewModel.onStartGameClicked}"
                     app:cardElevation="5dp"
                     app:cardCornerRadius="3dp"
                     app:cardUseCompatPadding="true"

@@ -20,6 +20,7 @@
 
     <!-- Quiz -->
     <string name="quiz_next" translatable="true">Next &gt;</string>
+    <string name="quiz_loading" translatable="true">Loading Quizes, Get ready!!</string>
     <string name="quiz_see_results" translatable="true">See Results &gt;</string>
     <string name="quiz_summary" translatable="true">Question %1$d of %2$d</string>
 

@@ -65,6 +65,7 @@
                 android:visibility="@{quizViewModel.nextButtonVisibility}"
                 android:elevation="4dp"
                 android:text="@{sessionViewModel.nextButtonText}"
+                android:onClick="@{quizViewModel.onNextQuizClicked}"
                 app:fadeVisible="@{quizViewModel.nextButtonVisible}"/>
 
         </LinearLayout>
@@ -79,6 +80,7 @@
             android:layout_alignLeft="@+id/topPanel"
             android:layout_alignTop="@+id/topPanel"
             android:layout_alignBottom="@+id/topPanel"
+            android:onClick="@{quizViewModel.onCloseQuizClicked}"
             android:padding="@dimen/quiz_close_button_padding"
             android:transitionName="@string/transition_close_button"
             android:elevation="4dp"/>

@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:tag="@{choice}"
             android:text="@{choice.content}"
+            android:onClick="@{quizViewModel.onChoiceClicked}"
             android:enabled="@{quizViewModel.choicesDisabled ? false : true}"
             tools:text="China"/>
 

@@ -57,8 +57,6 @@ public class QuizResultsFragment extends Fragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_quiz_complete, container, false);
         mBinding.setQuizResultsViewModel(mQuizResultsViewModel);
 
-        bindClickListeners();
-
         return mBinding.getRoot();
     }
 
@@ -66,62 +64,7 @@ public class QuizResultsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        unbindClickListeners();
-
         mQuizResultsViewModel.destroy();
         mBinding.unbind();
-    }
-
-    /**
-     * Bind needed click listeners
-     */
-    private void bindClickListeners(){
-        //Done button
-        mBinding.done.setOnClickListener(doneClickListener);
-
-        //Play again button
-        mBinding.playAgain.setOnClickListener(playAgainClickListener);
-    }
-
-    /**
-     * Unbind click listeners
-     */
-    private void unbindClickListeners(){
-        //Done button
-        mBinding.done.setOnClickListener(null);
-
-        //Play again button
-        mBinding.playAgain.setOnClickListener(null);
-    }
-
-    /**
-     * Click listener for done button
-     */
-    private View.OnClickListener doneClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            if(getActivity() != null &&
-                    getActivity() instanceof QuizResultsNavigation){
-                ((QuizResultsNavigation)getActivity()).OnDoneQuiz();
-            }
-        }
-    };
-
-    /**
-     * Click listener for play again button
-     */
-    private View.OnClickListener playAgainClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            if(getActivity() != null &&
-                    getActivity() instanceof QuizResultsNavigation){
-                ((QuizResultsNavigation)getActivity()).OnPlayNewQuiz();
-            }
-        }
-    };
-
-    public interface QuizResultsNavigation{
-        void OnDoneQuiz();
-        void OnPlayNewQuiz();
     }
 }

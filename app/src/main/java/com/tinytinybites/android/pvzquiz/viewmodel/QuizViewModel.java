@@ -3,16 +3,20 @@ package com.tinytinybites.android.pvzquiz.viewmodel;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.os.CountDownTimer;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import org.greenrobot.eventbus.EventBus;
+import com.tinytinybites.android.pvzquiz.BR;
 import com.tinytinybites.android.pvzquiz.R;
+import com.tinytinybites.android.pvzquiz.event.CloseQuizEvent;
+import com.tinytinybites.android.pvzquiz.event.NextQuizEvent;
 import com.tinytinybites.android.pvzquiz.model.Choice;
 import com.tinytinybites.android.pvzquiz.model.Quiz;
 import com.tinytinybites.android.pvzquiz.util.ResourceUtil;
@@ -31,7 +35,7 @@ public class QuizViewModel extends BaseObservable implements ViewModel, Parcelab
     private Quiz mQuiz;
     private boolean mChoicesDisabled;
     private CountDownTimer mTimer;
-    private int mCountDownTime;
+    @Bindable private int mCountDownTime;
 
     /**
      * Default constructor
@@ -47,7 +51,7 @@ public class QuizViewModel extends BaseObservable implements ViewModel, Parcelab
                 mTimer = new CountDownTimer(QUIZ_TIMEOUT * 1000, 800) {
                     public void onTick(long millisUntilFinished) {
                         mCountDownTime = Math.round(millisUntilFinished / 1000f);
-                        notifyChange();
+                        notifyPropertyChanged(BR.countDownTime);
                     }
 
                     public void onFinish() {
@@ -64,7 +68,6 @@ public class QuizViewModel extends BaseObservable implements ViewModel, Parcelab
     }
 
     protected QuizViewModel(Parcel in) {
-        Log.e(TAG, "QuizViewModel >>> Parcel", null);
         mQuiz = in.readParcelable(Quiz.class.getClassLoader());
         mChoicesDisabled = in.readByte() != 0;
         mCountDownTime = in.readInt();
@@ -124,7 +127,10 @@ public class QuizViewModel extends BaseObservable implements ViewModel, Parcelab
         return mCountDownTime + "s";
     }
 
-    public void onChoiceSelected(View v){
+    /**
+     * on click for selecting a choice
+     */
+    public void onChoiceClicked(View v){
         mChoicesDisabled = true;
         mTimer.cancel();
         mCountDownTime = 0;
@@ -133,6 +139,21 @@ public class QuizViewModel extends BaseObservable implements ViewModel, Parcelab
             mQuiz.setChosen((Choice) v.getTag());
             notifyChange();
         }
+    }
+
+    /**
+     * On click for done close button
+     * @param v
+     */
+    public void onCloseQuizClicked(View v){
+        EventBus.getDefault().post(new CloseQuizEvent());
+    }
+
+    /**
+     * On click for next quiz
+     */
+    public void onNextQuizClicked(View v){
+        EventBus.getDefault().post(new NextQuizEvent());
     }
 
     public int getBackgroundColor(Choice currentChoice){

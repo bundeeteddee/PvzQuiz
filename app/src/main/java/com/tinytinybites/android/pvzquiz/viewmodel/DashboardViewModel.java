@@ -3,6 +3,10 @@ package com.tinytinybites.android.pvzquiz.viewmodel;
 import android.databinding.BaseObservable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
+
+import org.greenrobot.eventbus.EventBus;
+import com.tinytinybites.android.pvzquiz.event.StartNewGameEvent;
 
 /**
  * Created by bundee on 9/14/16.
@@ -43,6 +47,14 @@ public class DashboardViewModel extends BaseObservable implements ViewModel, Par
             return new DashboardViewModel[size];
         }
     };
+
+    /**
+     * On click for starting new game
+     * @param view
+     */
+    public void onStartGameClicked(View view){
+        EventBus.getDefault().post(new StartNewGameEvent());
+    }
 
     @Override
     public void destroy() {

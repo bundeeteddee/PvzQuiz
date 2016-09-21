@@ -8,6 +8,7 @@
     <dimen name="dashboard_start_button_margin_top">30dp</dimen>
     <dimen name="dashboard_start_button_padding">15dp</dimen>
     <dimen name="dashboard_start_button_arrow_size">40dp</dimen>
+    <dimen name="dashboard_start_button_progress_size">40dp</dimen>
     <dimen name="dashboard_start_button_arrow_margin_left">15dp</dimen>
     <dimen name="dashboard_instructions_margin_side">42dp</dimen>
     <dimen name="dashboard_instructions_margin_top">10dp</dimen>

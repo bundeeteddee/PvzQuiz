@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import com.tinytinybites.android.pvzquiz.R;
 import com.tinytinybites.android.pvzquiz.databinding.FragmentQuizBinding;
+import com.tinytinybites.android.pvzquiz.event.NextQuizEvent;
 import com.tinytinybites.android.pvzquiz.intent.IntentUtil;
 import com.tinytinybites.android.pvzquiz.model.Quiz;
 import com.tinytinybites.android.pvzquiz.viewmodel.QuizViewModel;
@@ -23,6 +26,7 @@ public class QuizFragment extends Fragment {
     private FragmentQuizBinding mBinding;
     private QuizViewModel mQuizViewModel;
     private SessionViewModel mSessionViewModel;
+    private EventBus mEventBus;
 
     /**
      * Static constructor
@@ -45,6 +49,9 @@ public class QuizFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
+
+        mEventBus = EventBus.getDefault();
+        mEventBus.register(this);
 
         Bundle arguments = getArguments();
         if(savedInstanceState != null &&
@@ -71,9 +78,6 @@ public class QuizFragment extends Fragment {
         mBinding.setQuizViewModel(mQuizViewModel);
         mBinding.setSessionViewModel(mSessionViewModel); //Session VM is special as it binds only with singleton instance.
 
-        //Bind click listeners
-        bindClickListeners();
-
         return mBinding.getRoot();
     }
 
@@ -81,7 +85,7 @@ public class QuizFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        unbindClickListeners();
+        mEventBus.unregister(this);
 
         mQuizViewModel.destroy();
         mSessionViewModel.destroy();
@@ -89,80 +93,18 @@ public class QuizFragment extends Fragment {
     }
 
     /**
-     * Bind needed click listeners
-     */
-    private void bindClickListeners(){
-        //Choices
-        mBinding.choice1.choice.setOnClickListener(choiceClickListener);
-        mBinding.choice2.choice.setOnClickListener(choiceClickListener);
-        mBinding.choice3.choice.setOnClickListener(choiceClickListener);
-        mBinding.choice4.choice.setOnClickListener(choiceClickListener);
-        mBinding.choice5.choice.setOnClickListener(choiceClickListener);
-
-        //Next button
-        mBinding.next.setOnClickListener(nextClickListener);
-
-        //Close button
-        mBinding.close.setOnClickListener(closeClickListener);
-    }
-
-    /**
-     * Unbind click listeners
-     */
-    private void unbindClickListeners(){
-        //Choices
-        mBinding.choice1.choice.setOnClickListener(null);
-        mBinding.choice2.choice.setOnClickListener(null);
-        mBinding.choice3.choice.setOnClickListener(null);
-        mBinding.choice4.choice.setOnClickListener(null);
-        mBinding.choice5.choice.setOnClickListener(null);
-
-        //Next button
-        mBinding.next.setOnClickListener(null);
-
-        //Close button
-        mBinding.close.setOnClickListener(null);
-    }
-
-    /**
-     * Click listener for choices
-     */
-    private View.OnClickListener choiceClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            mBinding.getQuizViewModel().onChoiceSelected(v);
-        }
-    };
-
-    /**
      * Click listener for next button
      */
-    private View.OnClickListener nextClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            if(getActivity() != null &&
-                    getActivity() instanceof QuizNavigation){
-                //Find shared element, the close button
-                ((QuizNavigation)getActivity()).OnNextQuiz(mBinding.close, mBinding.topPanel);
-            }
+    @Subscribe
+    public void onNextQuizClicked(NextQuizEvent event){
+        if(getActivity() != null &&
+                getActivity() instanceof QuizNavigation){
+            //Find shared element, the close button
+            ((QuizNavigation)getActivity()).OnNextQuiz(mBinding.close, mBinding.topPanel);
         }
-    };
-
-    /**
-     * Click listener for close button
-     */
-    private View.OnClickListener closeClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            if(getActivity() != null &&
-                    getActivity() instanceof QuizNavigation){
-                ((QuizNavigation)getActivity()).OnCloseQuiz();
-            }
-        }
-    };
+    }
 
     public interface QuizNavigation{
         void OnNextQuiz(View view1, View view2);
-        void OnCloseQuiz();
     }
 }

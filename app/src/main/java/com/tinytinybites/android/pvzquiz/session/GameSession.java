@@ -1,12 +1,8 @@
 package com.tinytinybites.android.pvzquiz.session;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import com.tinytinybites.android.pvzquiz.model.Quiz;
-import com.tinytinybites.android.pvzquiz.util.ResourceUtil;
 
 /**
  * Created by bundee on 9/14/16.
@@ -26,7 +22,7 @@ public class GameSession {
      * Protected constructor
      */
     protected GameSession(){
-        resetSession();
+        initSession();
     }
 
     /**
@@ -41,6 +37,17 @@ public class GameSession {
     }
 
     /**
+     * Init session
+     */
+    private void initSession(){
+        synchronized (mMutex) {
+            mQuizes = new ArrayList<>();
+            mCategory = null;
+            mCurrentQuizIndex = 0;
+        }
+    }
+
+    /**
      * Reset game session
      */
     public void resetSession(){
@@ -52,29 +59,16 @@ public class GameSession {
             }
             mCurrentQuizIndex = 0;
         }
-
-        generateQuizes();
     }
 
-    /**
-     * Reset session and generate quiz questions
-     */
-    private void generateQuizes(){
+    public void setQuizes(List<Quiz> newQuizes){
         synchronized (mMutex) {
-            try {
-                String quizJson = ResourceUtil.GetQuizJsonResource();
-
-                JSONObject quizObject = new JSONObject(quizJson);
-
-                //Quizes
-                mCategory = quizObject.getString("category");
-                JSONArray quizesJsonArray = quizObject.getJSONArray("quizes");
-                for (int i = 0; i < quizesJsonArray.length(); i++) {
-                    mQuizes.add(new Quiz(quizesJsonArray.getJSONObject(i), mCategory));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if(newQuizes != null &&
+                    !newQuizes.isEmpty()){
+                mCategory = newQuizes.get(0).getQuestion().getCategory();
             }
+
+            mQuizes = new ArrayList<>(newQuizes);
         }
     }
 
@@ -125,6 +119,12 @@ public class GameSession {
             return mQuizes != null &&
                     !mQuizes.isEmpty() &&
                     mCurrentQuizIndex < mQuizes.size() - 1;
+        }
+    }
+
+    public boolean needToLoadQuizes(){
+        synchronized (mMutex){
+            return mQuizes == null || mQuizes.isEmpty();
         }
     }
 
